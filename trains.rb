@@ -11,10 +11,6 @@ def gets
 end
 
 def welcome
-
-  # d = DateTime.parse('3rd Feb 2001 04:05:06+03:30')
-  # puts d.strftime('%I:%M:%S %p')
-
   puts "Welcome to the train system!"
   main_menu
 end
@@ -24,7 +20,7 @@ def main_menu
   puts "R - Login as a Rider"
   puts "X - Logout"
 
-  case gets.upcase
+  case gets.chomp.upcase
   when 'O'
     operator_menu
   when 'R'
@@ -44,27 +40,26 @@ def operator_menu
   puts 'L - List all train lines'
   puts 'X - Go back'
 
-  case gets.upcase
+  case gets.chomp.upcase
   when 'AS'
     puts "Enter the station name"
-    input = gets.downcase
+    input = gets.chomp.downcase
     new_station = Stations.new({'name' => input})
     new_station.save
     operator_menu
   when 'AL'
     puts "Enter the line name"
-    input = gets.downcase
+    input = gets.chomp.downcase
     new_line = Lines.new({'name' => input})
     new_line.save
     operator_menu
-
   when 'S'
     Stations.all.each_with_index do |station, index|
       puts "#{index+1}: #{station.name}"
     end
     puts "\n\n"
     puts "Enter a station number to view information on that station"
-    input = gets.to_i
+    input = gets.chomp.to_i
     view_station(Stations.all[input-1])
   when 'L'
     Lines.all.each_with_index do |line, index|
@@ -72,7 +67,7 @@ def operator_menu
     end
     puts "\n\n"
     puts "Enter a line number to view information on that line"
-    input = gets.to_i
+    input = gets.chomp.to_i
     view_line(Lines.all[input-1])
   when 'X'
     main_menu
@@ -97,10 +92,10 @@ def view_station(station)
   puts "D - Delete this station"
   puts "X - Go back"
 
-  case gets.upcase
+  case gets.chomp.upcase
   when "R"
     puts "Enter the number of the line you would like to remove"
-    new_stop = Stops.new({'station_id' => station.id, 'line_id' => station.stops[gets.to_i-1].id})
+    new_stop = Stops.new({'station_id' => station.id, 'line_id' => station.stops[gets.chomp.to_i-1].id})
     new_stop.delete
     view_station(station)
   when "A"
@@ -108,7 +103,7 @@ def view_station(station)
       puts "#{index+1}: #{line.name}"
     end
     puts "Enter the number of the line you wish to add to this station"
-    input = gets.to_i
+    input = gets.chomp.to_i
     new_stop = Stops.new({'station_id' => station.id, 'line_id' => Lines.all[input-1].id})
     new_stop.save
     puts "Connection made"
@@ -140,10 +135,10 @@ def view_line(line)
   puts "D - Delete this line"
   puts "X - Go back"
 
-  case gets.upcase
+  case gets.chomp.upcase
   when "R"
    puts "Enter the number of the station you want to remove."
-   new_stop = Stops.new({'station_id' => line.stops[gets.to_i-1].id, 'line_id' => line.id})
+   new_stop = Stops.new({'station_id' => line.stops[gets.chomp.to_i-1].id, 'line_id' => line.id})
    new_stop.delete
    view_line(line)
   when "A"
@@ -151,7 +146,7 @@ def view_line(line)
       puts "#{index+1}: #{station.name}"
     end
     puts "Enter the number of the station you wish to add to this line"
-    input = gets.to_i
+    input = gets.chomp.to_i
     new_stop = Stops.new({'station_id' => Stations.all[input-1].id, 'line_id' => line.id})
     new_stop.save
     puts "Connection made"
