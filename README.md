@@ -1,4 +1,5 @@
 Train system
+---------------------------------------------
 Make a program to map a train system. It should allow trains system operators to add and update information, and train riders to get information out.
 
 For this lesson, to describe the features I want you to build, I'm going to write user stories. User stories are a way of describing a feature that breaks functionality down into the smallest possible pieces and clearly communicates the use case, functionality, and benefit.
